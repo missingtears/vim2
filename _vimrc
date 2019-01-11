@@ -20,6 +20,13 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'scrooloose/nerdcommenter'
+Plug 'aperezdc/vim-template'
+Plug 'Raimondi/delimitMate'
+Plug 'altercation/vim-colors-solarized'
+Plug 'dracula/vim', {'as': 'dracula'}
+Plug 'posva/vim-vue'
+Plug 'leafgarland/typescript-vim'
+Plug 'albertorestifo/github.vim'
 
 call plug#end()
 
@@ -39,7 +46,8 @@ if has('gui_running') && has('libcall')
 	endfunction
 
 	"F11
-	map <F11> <Esc>:call ToggleFullScreen()<CR>
+	nmap <F11> <Esc>:call ToggleFullScreen()<CR>
+    nmap <Leader>ff <Esc>:call ToggleFullScreen()<CR>
 
 	let g:VimAlpha = 240
 	function! SetAlpha(alpha)

@@ -49,6 +49,7 @@ let g:ctrlp_map = '<C-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
 noremap <Leader>b :CtrlPBuffer<CR>
+noremap <Leader>m :CtrlPMRU<CR>
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
@@ -62,6 +63,32 @@ let g:ctrlp_custom_ignore = {
 "custom file listing command
 " let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 " let g:ctrlp_user_command = 'dir %s /-n /b /s /a-d'  " Windows
+
+let g:ctrlp_buffer_func = { 'enter': 'CtrlPBDelete' }
+
+function! CtrlPBDelete()
+  nnoremap <buffer> <silent> <c-@> :call <sid>DeleteMarkedBuffers()<cr>
+endfunction
+
+function! s:DeleteMarkedBuffers()
+  " list all marked buffers
+  let marked = ctrlp#getmarkedlist()
+
+  " the file under the cursor is implicitly marked
+  if empty(marked)
+    call add(marked, fnamemodify(ctrlp#getcline(), ':p'))
+  endif
+
+  " call bdelete on all marked buffers
+  for fname in marked
+    let bufid = fname =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(fname, '\d\+'))
+          \ : fnamemodify(fname[2:], ':p')
+    exec "silent! bdelete" bufid
+  endfor
+
+  " refresh ctrlp
+  exec "normal \<F5>"
+endfunction
 
 " ==============================================================
 " ag.vim
@@ -85,3 +112,18 @@ inoremap <expr> <c-j> pumvisible()?"\<Down>":"\<c-j>"
 let g:NERDCustomDelimiters={
 	\ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
 \}
+
+" ==============================================================
+" vim-templates
+" ==============================================================
+let g:templates_no_autocmd = 0
+
+" ==============================================================
+" delimitMate
+" ==============================================================
+let g:delimitMate_expand_cr=2
+
+" ==============================================================
+" typescript-vim
+" ==============================================================
+let g:typescript_indent_disable=1

@@ -1,12 +1,14 @@
 " File: vimrc_base
 " Author: missingtears
-" Description: fengpingping's personal vim configure file.
+" Description: missingtears's personal vim configure file.
 " Since: 2017-07-11
 " Modify: 2018-12-25
 
-" 设置leader替换
+let g:username = 'missingtears'
+
+" 定义 <Leader> 为逗号
 let mapleader = ","
-let g:mapleader = ","
+let maplocalleader = ","
 
 " 设置文件编码和文件格式
 set fenc=utf-8
@@ -17,9 +19,22 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 language messages zh_CN.utf-8
 
-set guifontwide=幼圆:h10.5
-set guifont=DejaVu_Sans_Mono_for_Powerline:h10.5
-colorscheme gruvbox
+"if has('gui_running')
+    "set background=light
+"else
+    "set background=dark
+"endif
+let g:gruvbox_italic=0
+let g:solarized_italic=0
+
+set background=dark
+set guifontwide=幼圆:h10
+"set guifont=DejaVu_Sans_Mono_for_Powerline:h10.5
+set guifont=DejaVu_Sans_Mono_for_Powerline:h10
+"colorscheme gruvbox
+colorscheme solarized
+"colorscheme github
+"colorscheme dracula
 
 " 快迅保存
 nmap <leader>w :w!<cr>
@@ -84,3 +99,12 @@ noremap <C-l> <C-W>l
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " 重新载入 vimrc配置文件
 nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Disable highlight when <leader><cr> is pressed
+noremap <silent> <leader><cr> :noh<cr>
+
+" 代码折叠
+set foldmethod=marker
+
+" remove mapping ctrl + F
+unmap <C-F>
